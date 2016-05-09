@@ -58,7 +58,6 @@ var carLot = (function(carLot) {
     let newRow = document.createElement("div");
     newRow.className = "row"; 
     outputDiv.appendChild(newRow);
-    newRow.innerHTML = `<p>row</p>`;
     return newRow;
   }
 
@@ -91,7 +90,7 @@ var carLot = (function(carLot) {
   } //end of createCol.
 
 
-  var descriptionText = `hey`
+  
 
     //main DOM injector loop. 
   carLot.fillOutCards = function() {
@@ -101,13 +100,16 @@ var carLot = (function(carLot) {
     for (var i = 0; i < inventory.length; i++) {
       var carCard;
       var carRow;
-
+      var currentCardInfo = inventory[i];
       //this if statement creates a new row for the first card and every fourth card. createCol function above uses selectLastCol to determine which row to append the column to. 
       if (i % 3 === 0 ) {
         carLot.createRow();
        } //end of if statement. 
-
         carCard = carLot.createCol();
+        carCard.id = currentCardInfo.id;
+        
+        var descriptionText = `<h5>${currentCardInfo.color} ${currentCardInfo.make} ${currentCardInfo.model}</h5>
+                                <p>`
         carCard.innerHTML = descriptionText;
 
     } //end of for loop. 
