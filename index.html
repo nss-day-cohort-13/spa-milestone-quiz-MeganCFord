@@ -24,18 +24,19 @@ When you start typing into the navbar's text input, the description of the curre
   <!-- Put a standard Bootstrap navbar element at the top of your page. Put only two elements in the navbar.-->
   <nav class = "navbar navbar-default">
   <!-- A text input field. -->
-    <label for= "inputBox">Text Input
-      <input type="text" name="textInput" id = "inputBox" placeholder="Input Text Here">
+    <label for= "inputBox">Edit Description
+      <input type="text" name="textInput" id = "inputBox" placeholder="">
     </label>
   <!-- A button. -->
-    <button  id = "abutton" class = "btn btn-default">Button</button> 
+    <button  id = "submitButton" class = "btn btn-default">Submit</button> 
   </nav>
 
   <div id="output" class = "container-fluid">
    <!-- car cards go here. -->
   </div>
+<script src = "DOM.js"></script> <!--this had to go first in order for the 'outputDiv' variable to work. I don't like this, not truly modular. Change V2. -->
 <script src = "quiz.js"></script>
-<script src = "activateEvents.js"></script>
 <script src = "border.js"></script>
+
 </body>
 </html>
