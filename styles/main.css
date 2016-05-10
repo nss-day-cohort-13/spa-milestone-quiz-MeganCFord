@@ -12,10 +12,17 @@
   padding: 10px;
 }
 
-/*for some reason I had to set these as important, I expect because they are less specific than 'bordergoeshere', but would fix in v2, not terribly important for this project's requirements.*/
+/*for some reason I had to set some of these as 'important', I expect because they are less specific than 'bordergoeshere' or like, javascript has a lower importance than the selectors in this file, but would ideally just fix in v2, not terribly important for this project's requirements.*/
 .activeCard  {
   border: 10px solid yellow !important;
   padding: 5px !important;
   background-color: orange;
 }
 
+.borderGoesHere h4 {
+  color: darkgreen;
+} 
+
+.purchased {
+  color: orange !important; 
+}

@@ -1,91 +1,135 @@
 // The final IIFE should augment the object with two more functions. One function resets the border thickness and background color for each car element back to the original values. The other function changes the thickness of the border of a car element, and changes its background color. The function must accept two arguments.
 // A car DOM element that was clicked on.
 // A color name.
+ 
+
 "use strict";
 
 var carLot = (function(carLot) {
+  var inventory;
 
-  carLot.setActiveCard = function(currentArrayOfCards, cardThatWasClicked) {
-    //loop through each card div and set the active/inactive attribute. runs within .whatWasClicked method.
-    currentArrayOfCards.forEach(function(card){
-      if (card.id === cardThatWasClicked.id) {
-        card.setAttribute("active", true);
-        //runs a chain of functions to set the active background color using the inventory object, and add the active class. 
-        carLot.findActiveBackgroundColor(cardThatWasClicked);
-        //activates the text box and passes the selected card into the mirror-text function. 
-        carLot.setUpTextBox(cardThatWasClicked);
-      } else {
-        card.setAttribute("active", false);
-        carLot.resetBorder(card);
-      }//end of if statement 
-    });//end of forEach loop
-  };//end of findActiveCard
+  var associatedJsonInfo;
+
+  //below are 'active' variables that get reset whenever a card div gets clicked, so that they're accessible across multiple functions and I don't have to pass the findings of the finder functions as arguments or re-loop multiple times- I find this a bit more DRY/flexible. 
+
+  var activeCard;
+
+  carLot.getActiveCard = function() {
+    return activeCard;
+  }
+
+  var activeDescription;
+
+  carLot.setActiveDescription = function() {
+    activeDescription = activeCard.firstChild.children[3]; //I know these are tightly bound and will change if needed. ideally would push the change to the array info. I have had trouble doing that in this exercise and would proceed with trying to make it happen in v2 if necessary. 
+  };
+
+  carLot.getActiveDescription = function() {
+    return activeDescription;
+  };
   
-  //this is the function that runs when something is clicked. sets variables. 
+  var activeSoldStatus;
+
+  carLot.setActiveSoldStatus = function() {
+    activeSoldStatus = activeCard.firstChild.children[4];
+  };
+
+  carLot.getActiveSoldStatus = function() { 
+    return activeSoldStatus;
+  };
+
+  var activeBackgroundColor;
+  
+  
+  ///DEFAULT BORDER maker: runs at time of load within filloutCards to attach the default border color to each card. 
+  
+  carLot.setDefaultBorderColor = function(currentCarColor, carCard ) {
+
+    carCard.firstChild.setAttribute("style", `border-color: ${currentCarColor}`);
+
+  } 
+
+
+
+  ///////////////////////
+  ///CARD CLICK FUNCTIONS
+  
+  //this is the first function that runs when something is clicked. Sets active card if you clicked on a div. 
   carLot.whatWasClicked = function(event) {
-    //recreate an array of car cards each time something is clicked, to set/reset whether each one is active.
-    var currentArrayOfCards = Array.from(document.getElementsByClassName("carCard"));
-    var cardThatWasClicked = event.currentTarget;
+
     
-    carLot.setActiveCard(currentArrayOfCards, cardThatWasClicked);
+    activeCard = event.currentTarget;
+
+    carLot.activateNavBar();
     
-  };//end of whatWasClicked
-
-
-  //////////////ACTIVE CARD STYLING 
-  ///functions that run to set and reset borders
-
-  carLot.resetBorder = function(cardThatWasNotClicked) {
-    cardThatWasNotClicked.firstChild.classList.remove("activeCard");
-    // cardThatWasNotClicked.firstChild.setAttribute("style", "border")
-     
+    carLot.setBorders(activeCard);
+    
   };
 
 
-  //this is the function I'm most proud of in this project, although it's very tightly bound and I'm sure jquery will make it completely obselete. Drills into the project's stylesheet and resets the activeCard background color as the car color each time a new card is selected. 
-  carLot.setActiveBackgroundColor = function(cardThatWasClicked, activeBackgroundColor) {
-    var stylesheet = document.styleSheets[1];
-    var activeCardClass = stylesheet.cssRules[2];
+  //this is the second function that runs when a div is clicked. resets all active/inactive borders. 
+  carLot.setBorders = function(activeCard) {
 
-    activeCardClass.style.backgroundColor = `${activeBackgroundColor}`;
-    cardThatWasClicked.firstChild.classList.add("activeCard");
+    var domCardArray = Array.from(document.getElementsByClassName("carCard"));
+    
+    domCardArray.forEach(function(card){
+
+      if (card.id === activeCard.id) {
+        carLot.setActiveCardInfo(activeCard);
+      } else {
+        carLot.resetBorder(card);
+      }
+
+    });
 
   };
 
-  //runs within 'set active card' loop. Finds the background color of the card using the inventory (easier than finding via css border color)
-  carLot.findActiveBackgroundColor = function(cardThatWasClicked ) {
-    var inventory = carLot.getInventory(); 
-    var activeBackgroundColor;
+
+  //this is the third function that runs when a div is clicked. Loops through inventory(json) array and sets active info variables. 
+  carLot.setActiveCardInfo = function( activeCard ) {
+
+    inventory = carLot.getInventory(); 
    
     for (var i = 0; i < inventory.length; i++) {
-      if (inventory[i].id === cardThatWasClicked.id) {
+      if (inventory[i].id === activeCard.id) {
+
+        associatedJsonInfo = inventory[i];
+
         activeBackgroundColor = inventory[i].color;
+        carLot.setActiveSoldStatus(activeCard);
+        carLot.setActiveDescription(activeCard);
+        
         break;
-      }//end of if statement
-    }//end of for loop
+      }
+    }
 
     //now that I know the active background color, I'll set it into the CSS. 
-    carLot.setActiveBackgroundColor(cardThatWasClicked, activeBackgroundColor)
-  };//end of findActiveBackgroundColor
+    carLot.setActiveBackgroundColor(activeCard, activeBackgroundColor)
 
-  ///////end of active styling
-  /////////////////////
+  };
 
 
-  ////////////////////////////
-  ///DEFAULT BORDERS
-  ///these functions run at time of load to attach the default border color to each card. 
+ 
+  //runs within .setborders each time active div is changed, to reset all non-active cards. 
+  carLot.resetBorder = function(cardThatWasNotClicked) {
+    cardThatWasNotClicked.firstChild.classList.remove("activeCard");
+     
+  }; 
+
+
+  //this is the function I'm most proud of in this project, although it's very tightly bound and I'm sure jquery will make it completely obselete. Drills into the project's stylesheet and resets the activeCard background color as the corresponding car color each time a new card is selected. Runs within .setBorders. 
+  carLot.setActiveBackgroundColor = function(activeCard, activeBackgroundColor) {
+    let stylesheet = document.styleSheets[1];
+    let activeCardClass = stylesheet.cssRules[2];
+
+    activeCardClass.style.backgroundColor = `${activeBackgroundColor}`;
+    activeCard.firstChild.classList.add("activeCard");
+
+  };
+
+
+
   
-  carLot.findDefaultBorderColor = function(currentCardInfo, carCard) {
-    var currentCarColor = currentCardInfo.color;
-    carLot.setDefaultBorder(carCard, currentCarColor);
-  }; //end of findDefaultBorderColor
-  
-  carLot.setDefaultBorder = function(carCard, currentCarColor) {
-    carCard.firstChild.setAttribute("style", `border-color: ${currentCarColor}`);
-  } //end of setDefaultBorder
-
-  //////////////End of default borders
   
   return carLot;
 }(carLot || {}));

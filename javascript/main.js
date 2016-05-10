@@ -7,7 +7,7 @@ var carLot = (function(carLot) {
 
   var inventoryRequest = "";
   var inventory = [];
-
+  
 
   ////////////////////////////
   ///JSON LOADER FUNCTIONSET
@@ -85,13 +85,22 @@ var carLot = (function(carLot) {
     return newCol;
   }; //end of createCol.
 
-  //adds'sold' or 'available' information to the end of the inner HTML via currentCardInfo's boullion, so I can change the text color. Runs within .fillOutCards. 
-  carLot.soldorNo = function(currentCardInfo, carCard) {
-    if (currentCardInfo.purchased ===false){
-      carCard.firstChild.innerHTML += `<h4 class = "available">Available</h4>`;
-    } else {
-      carCard.firstChild.innerHTML += `<h4 class = "sold">Sold</h4>`;
-    }//end of sold/available if statement
+  //adds'sold' or 'available' information to the end of the inner HTML via currentCardInfo's boullion, so I can change the text color. Runs within .fillOutCards. I would love to convert this into a setter/getter so I can use it as part of changing the status using the button- but that would likely be a v2 thing. 
+  
+  carLot.soldorNo = function(associatedJsonInfo, eachCarCard) {
+    var purchasedDiv = eachCarCard.firstChild.children[4];
+
+    if (associatedJsonInfo.purchased === true) {
+      purchasedDiv.classList.add("purchased");
+      purchasedDiv.classList.remove("available");
+      purchasedDiv.innerHTML = "Purchased";
+   } else {
+      purchasedDiv.classList.remove("purchased");
+      purchasedDiv.classList.add("available");
+      purchasedDiv.innerHTML = "Available";
+    }
+
+  
   }; //end of soldorno function
   
 
@@ -101,7 +110,8 @@ var carLot = (function(carLot) {
                               <h5>${currentCardInfo.color} ${currentCardInfo.make} ${currentCardInfo.model}</h5>
                               <p>Year: ${currentCardInfo.year}</p>
                               <p>Price : $${currentCardInfo.price}</p>
-                              <p>${currentCardInfo.description}</p>
+                              <p class = "description">${currentCardInfo.description}</p>
+                              <h4></h4>
                             </div>`;
     return descriptionText;
   };
@@ -122,9 +132,10 @@ var carLot = (function(carLot) {
        } //end of if statement. 
       var carCard = carLot.createCol();
       carCard.id = currentCardInfo.id;
+
       carCard.innerHTML = carLot.setDescriptionText(currentCardInfo);
+      carLot.setDefaultBorderColor(currentCardInfo.color, carCard); 
       carLot.soldorNo(currentCardInfo, carCard); 
-      carLot.findDefaultBorderColor(currentCardInfo, carCard); 
 
     } //end of filling out cards forloop. 
 
