@@ -88,19 +88,21 @@ var carLot = (function(carLot) {
   //adds'sold' or 'available' information to the end of the inner HTML via currentCardInfo's boullion, so I can change the text color. Runs within .fillOutCards. 
   carLot.soldorNo = function(currentCardInfo, carCard) {
     if (currentCardInfo.purchased ===false){
-      carCard.innerHTML += `<h4 class = "available">Available</h4>`;
+      carCard.firstChild.innerHTML += `<h4 class = "available">Available</h4>`;
     } else {
-      carCard.innerHTML += `<h4 class = "sold">Sold</h4>`;
+      carCard.firstChild.innerHTML += `<h4 class = "sold">Sold</h4>`;
     }//end of sold/available if statement
   }; //end of soldorno function
   
 
   //function to set innerHTML of each card. runs as part of .fillOutCards. Took out of main loop for modularization purposes.
   carLot.setDescriptionText = function(currentCardInfo) {
-    let descriptionText = `<h5>${currentCardInfo.color} ${currentCardInfo.make} ${currentCardInfo.model}</h5>
-                                <p>Year: ${currentCardInfo.year}</p>
-                                <p>Price : $${currentCardInfo.price}</p>
-                                <p>${currentCardInfo.description}</p>`;
+    let descriptionText = `<div class="borderGoesHere">
+                              <h5>${currentCardInfo.color} ${currentCardInfo.make} ${currentCardInfo.model}</h5>
+                              <p>Year: ${currentCardInfo.year}</p>
+                              <p>Price : $${currentCardInfo.price}</p>
+                              <p>${currentCardInfo.description}</p>
+                            </div>`;
     return descriptionText;
   };
 

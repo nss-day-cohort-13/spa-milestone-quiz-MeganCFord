@@ -1,10 +1,21 @@
+
 .carCard {
   height: 250px;
-  box-shadow: 2px 2px 2px black;
-  border: 2px solid black;
+  padding: 5px;
 }
 
-.activeCard {
-  border: 5px solid;
-  background: yellow;
+/*set a border into the div so that I could have some space between the cards, without messing with the bootstrap gutters.*/
+.borderGoesHere {
+  font-size: .8em;
+  height: 240px;
+  border: 4px solid;
+  padding: 10px;
 }
+
+/*for some reason I had to set these as important, I expect because they are less specific than 'bordergoeshere', but would fix in v2, not terribly important for this project's requirements.*/
+.activeCard  {
+  border: 10px solid yellow !important;
+  padding: 5px !important;
+  background-color: orange;
+}
+
