@@ -22,7 +22,7 @@
       "year": "2012", 
       "price": "11130", 
       "color": "green", 
-      "purchased": false, 
+      "purchased": true, 
       "description": "This car's name is Yoshi and it's so friendly!"
     }, 
     {

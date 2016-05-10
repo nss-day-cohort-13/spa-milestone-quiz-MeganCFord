@@ -1,4 +1,6 @@
 {
   "esversion": 6,
-  "globalstrict": true
+  "globalstrict": true,
+  "browser": true, 
+  "devel": true
 }
