@@ -16,7 +16,7 @@ var carLot = (function(carLot) {
 
   carLot.getActiveCard = function() {
     return activeCard;
-  }
+  };
 
   var activeDescription;
 
@@ -47,7 +47,7 @@ var carLot = (function(carLot) {
 
     carCard.firstChild.setAttribute("style", `border-color: ${currentCarColor}`);
 
-  } 
+  }; 
 
 
 
@@ -104,7 +104,7 @@ var carLot = (function(carLot) {
     }
 
     //now that I know the active background color, I'll set it into the CSS. 
-    carLot.setActiveBackgroundColor(activeCard, activeBackgroundColor)
+    carLot.setActiveBackgroundColor(activeCard, activeBackgroundColor);
 
   };
 

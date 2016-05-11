@@ -15,7 +15,7 @@ var carLot = (function(carLot) {
   
   carLot.activateEvents = function() {   
 
-    //nav bar elements are set as inactive when page loads. I have not added functionality to re-deactivate as it was not part of the requirements: v2 perhaps.
+    //nav bar elements are set as inactive when page loads.
     soldButton.addEventListener ("click", carLot.setSold );
 
     inputBox.addEventListener("keyup", carLot.mirrorKeys);
@@ -73,9 +73,9 @@ var carLot = (function(carLot) {
       card.firstChild.classList.remove("activeCard");
 
     }); //end of forEach    
-  } //end of reset active boxes. 
+  }; //end of reset active boxes. 
 
-  //deactivates/resets nav bar as part of enter/esc keypress inside textbox. V2 I would love to have clicking off the div deactivate the nav bar, but not part of requirements so didn't worry about it now - v2.(event bubbling makes it complicated)
+  //deactivates/resets nav bar as part of enter/esc keypress inside textbox. V2 I would love to have clicking off the div deactivate the nav bar, but not part of requirements so didn't worry about it now.(event bubbling makes it complicated)
   carLot.deactivateNavBar = function() {
 
     inputBox.setAttribute("disabled", true); 
@@ -83,7 +83,7 @@ var carLot = (function(carLot) {
     inputBox.blur();
     inputBox.value = "";
     inputBox.placeholder = "select a car first";
-  }
+  };
 
 
   //function to run every time the set sold button is clicked. Wasn't able to run this through the 'soldorNo' function in Main unfortunately, because I used the inventory array directly to select whether the initial status was sold or available. This function does not change the inventory array. 
