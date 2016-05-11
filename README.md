@@ -1,3 +1,5 @@
+npm install 
+
 # Single Page Applications Quiz
 
 ## Setup

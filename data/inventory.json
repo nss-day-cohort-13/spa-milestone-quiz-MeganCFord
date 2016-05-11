@@ -1,0 +1,50 @@
+
+
+
+{
+  "_comment1": "Create an array of cars in the inventory.json file (see example structure). Put at least three cars in the array.",
+  "_comment2": "note: made four to check on row/column creation, and added a unique ID to each for selection purposes.",
+  "cars": [
+    {
+      "id": "234",
+      "make": "Nissan",
+      "model": "Rogue",
+      "year": "2006",
+      "price": "8999",
+      "color": "FireBrick",
+      "purchased": false,
+      "description": "This is an immaculate 2006 Nissan Rogue with only 25000 miles on it. Leather seats, power everything."
+    },
+    {
+      "id": "2260",
+      "make": "Mazda", 
+      "model": "Mazda2", 
+      "year": "2012", 
+      "price": "11130", 
+      "color": "green", 
+      "purchased": true, 
+      "description": "This car's name is Yoshi and it's so friendly!"
+    }, 
+    {
+      "id": "2842",
+      "make": "Ford", 
+      "model": "Mustang", 
+      "year": "2011", 
+      "price": "18000", 
+      "color": "black", 
+      "purchased": false, 
+      "description": "a little dent in one side but a motor to die for"
+    }, 
+    {
+      "id": "6830",
+      "make": "Scion", 
+      "model": "XB", 
+      "year": "2003", 
+      "price": "6000", 
+      "color": "grey", 
+      "purchased": false, 
+      "description": "looks like a toaster. You know you want it."
+
+    }
+  ]
+}
